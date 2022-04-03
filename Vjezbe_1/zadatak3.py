@@ -29,6 +29,6 @@ while True:
 #y = mx + b
 
 m = (y2 - y1) / (x2 - x1)
-b = y1 - m*x1
+b = -m*x1 + y1
 
-print("y =", m,"* x +", b)
+print("y = {}x + {}".format(m, b))

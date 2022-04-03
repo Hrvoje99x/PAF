@@ -1,15 +1,10 @@
-def f(): 
-    
-    x1 = int(input("x1: "))
-    x2 = int(input("x2: "))
-    y1 = int(input("y1: "))
-    y2 = int(input("y2: "))
+def f(x1, x2, y1, y2): 
 
     #y = mx + b
 
-    m = (y2 - y1) / (x2 - x1)
-    b = y1 - m*x1
+     m = (y2 - y1) / (x2 - x1)
+     b = -m*x1 + y1
 
-    print("y =", m,"* x +", b)
+     print("y = {}x + {}".format(m, b))
 
-f()
+f(3, 7, 2, 4)

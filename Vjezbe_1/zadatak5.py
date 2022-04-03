@@ -1,19 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def f(): 
-    
-    x1 = int(input("x1: "))
-    x2 = int(input("x2: "))
-    y1 = int(input("y1: "))
-    y2 = int(input("y2: "))
+def f(x1, x2, y1, y2): 
 
     #y = mx + b
 
     m = (y2 - y1) / (x2 - x1)
-    b = y1 - m*x1
+    b = -m*x1 + y1
 
     x = np.linspace(-10, 10, 200)
+
     y = m*x + b
 
     naziv = input("Naziv grafa: ")
@@ -33,7 +29,7 @@ def f():
     elif odabir == "NE":
         plt.show()
 
-f()
+f(3, 7, 2, 4)
     
     
     
