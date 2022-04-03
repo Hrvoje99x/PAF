@@ -16,6 +16,11 @@ class Particle:
 
     def set_initial_conditions(self, x0, y0, v0, theta):
 
+        self.x0 = x0
+        self.y0 = y0
+        self.v0 = v0
+        self.theta = (theta/360)*2*np.pi
+
         self.t.append(0)
         self.x.append(x0)
         self.y.append(y0)
@@ -42,6 +47,7 @@ class Particle:
     def plot_trajectory(self):
 
         plt.plot(self.x, self.y)
+        plt.show()
 
 
 
