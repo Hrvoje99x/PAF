@@ -4,7 +4,7 @@ from mpl_toolkits import mplot3d
 
 class EM:
 
-    def __init__(self, q, m, v, B , E, r, dt):
+    def __init__(self, q, m, v, B, E, r, dt):
 
         self.q = q
         self.m= m
@@ -36,27 +36,24 @@ class EM:
         del self.y_
         del self.z_
     
-    def akc(self, v):
+    def akc(self,v):
 
         a = (self.q/self.m)*(self.E+np.cross(v,self.B))
-        return a
+        return a 
 
     def __move_Euler(self):
 
         a = self.akc(self.v)
-
         self.v = self.v + a*self.dt
         self.r = self.r + self.v*self.dt
         self.t += self.dt
-
         self.x_.append(self.r[0])
         self.y_.append(self.r[1])
         self.z_.append(self.r[2])
 
-    def Euler(self, t):
+    def Euler(self,t):
 
         while self.t<= t:
-
            self. __move_Euler()
 
         return self.x_,self.y_,self.z_
@@ -81,16 +78,15 @@ class EM:
         self.z_.append(self.r[2])
 
     
-    def RK(self, t):
+    def RK(self,t):
 
         while self.t<= t:
-
            self. __move_RK()
 
-        return self.x_,self.y_,self.z_
+        return self.x_, self.y_, self.z_
 
     def plot_trajectory(self):
-        
+
         ax = plt.axes(projection = '3d')
-        ax.mplot3D(self.x_, self.y_, self.z_)
+        ax.plot3D(self.x_, self.y_, self.z_)
         plt.show()
