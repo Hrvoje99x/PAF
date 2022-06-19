@@ -1,73 +1,58 @@
-import numpy as np
+def two_step(func, x, h):
+    return (func(x+h) - func(x)) / h
 
-def derivacija(f, x, h = 0.01, m = 0):
+def three_step(func,x,h):
+    return (func(x+h) - func(x-h)) / (2*h)
 
-    if m == 1:
-        #print((f(x + h) - f(x)) / h)
-        return(f(x + h) - f(x)) / h
+def derivative(func, a, b, h, opcija):
 
-    elif m == 0:
-        #print((f(x + h) - f(x)) / 2*h)
-        return(f(x + h) - f(x)) / 2*h
+    x_lista = []
+    y_lista = []
+    x = a
 
+    while x <= b:  
+        x_lista.append(x)
+        x += h
 
-#derivacija(np.cos, 0, 1e-8, 1)
+    if opcija == 2:   
+        for x in x_lista:
+            d = two_step(func,x,h)
+            y_lista.append(d)
 
-def derivacija2(f,x1, x2, h = 0.01, m = 0):
+    elif opcija == 3:         
+        for x in x_lista:    
+            d = three_step(func,x,h)
+            y_lista.append(d)
 
-    d = []
-    dx = np.arange(x1, x2, h)
+    return x_lista,y_lista
 
-    for i in dx:
+def int_pravokutnik(func, a, b, n):
 
-        if m == 0:
-            d.append(derivacija(f, i, h))
-
-        elif m == 1:
-            d.append(derivacija(f, i, h, 1))
-
-    return d, dx
-
-#derivacija2(np.cos, -2, 2, 0.01)
-
-def integracija(f, a, b, n):
-
-    dx = (b-a)/n
-    
-    x_gornja = a
-    x_donja = a + dx
-
-    gm = 0
-    dm = 0
-
-    for i in range (n):
-
-        gm = f(x_gornja)*dx
-        dm = f(x_donja)*dx
-
-        x_gornja += x_gornja
-        x_donja += x_donja
-
-        print(gm, dm)
-
-    return gm, dm
-
-#integracija(np.cos, 0, 5, 100)
-
-def integracija2(f, a, b, n):
-
-    dx = (b-a)/n
-    xk = a
-    suma = 0
+    dx = (b-a)/n 
+    gornja_meda = 0
+    donja_meda = 0
+    c = a + dx    
+    d = a 
 
     for i in range(n):
+        gornja_meda += func(c)*dx
+        c += dx
+        donja_meda += func(d)*dx
+        d += dx
+    
+    return gornja_meda, donja_meda
+    
+def int_trapez(func, a, b, n):
 
-        suma = suma + f(xk + f(xk + dx))
-        xk = xk + dx
+    dx = (b-a)/n
+    suma = 0
+    x = a
 
-    integral = (dx/2)* suma
-    print(integral)
-
-integracija2(np.cos, 0, 1, 100)
+    for i in range(n):
+        suma += func(x)
+        x += dx
+    integral = suma*dx + ((func(b) + func(a))/2)*dx
+    
+    return integral
 
 

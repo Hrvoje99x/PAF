@@ -1,32 +1,60 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
-def sila(f,x0,v0,t_end,masa,dt = 0.1,t_start=0):
-    res = []
-    t = t_start
+class Particle:
 
-    f0 = f(x0,v0,t)
-    res.append(f0)
+    def __init__(self, m, x0, v0, func):
 
-    a0 = f0/masa
+        self.x_l = []
+        self.v_l = []
+        self.a_l = []
+        self.t_l = []
+        self.m = m
+        self.x = x0
+        self.v = v0
+        self.F = func
+        self.t = 0
+        self.a = self.F(self.x,self.v,self.t)/self.m
+        self.x_l.append(self.x)
+        self.v_l.append(self.v)
+        self.a_l.append(self.a)
+        self.t_l.append(self.t)
 
-    while t <= t_end:
-        t += dt
-        v0 = v0 + a0 * dt
-        x0 = x0 + v0 * dt
+    def move(self, dt, t):
 
-        f0 = f(x0,v0,t)
+            N = int(t/dt)
 
-        a0 = f0/masa
+            for i in range(N):
 
-        res.append(f0)
+                self.a = self.F(self.x,self.v,self.t)/self.m
+                self.v = self.v + self.a*dt
+                self.x = self.x + self.v*dt
+                self.t += dt
+                self.x_l.append(self.x)
+                self.v_l.append(self.v)
+                self.a_l.append(self.a)
+                self.t_l.append(self.t)
+            return self.x_l,self.v_l,self.a_l,self.t_l
 
-    return res
+    def plot_trajectory(self, dt, t):
 
+        x,v,a,t = self.move(dt, t)
+        plt.subplot(1,3,1)
+        plt.plot(t,x)
+        plt.subplot(1,3,2)
+        plt.plot(t,v)
+        plt.subplot(1,3,3)
+        plt.plot(t,a)
+        plt.show()
+    
+    def reset(self):
 
-def f(x,v,t):
-    k = 10
-    return -k*x
-
-res = sila(f, 0, 10, 10, 1)
-print(res)
+        del self.k
+        del self.m
+        del self.x
+        del self.v
+        del self.a
+        del self.t
+        del self.x_l
+        del self.v_l
+        del self.a_l
+        del self.t_l
